@@ -1,13 +1,13 @@
 const models = require('../models');
 
 const getPatients = async () => {
-    const result = await models.Patients.findAndCountAll()
+    const result = await models.Patients.findAndCountAll({attributes: { exclude: ['password'] }})
+    
     return result
 }
 
 const getPatient = async (patientId) => {
-    const result = await models.Patients.findByPk(patientId,{
-        exclude:['password']})
+    const result = await models.Patients.findByPk(patientId,{attributes: { exclude: ['password'] }})
     return result
 }
 
@@ -20,7 +20,8 @@ const updatePatient = async (payload, patientId) => {
     const result = await models.Patients.update(payload, {
         where:{
             patient_id:patientId
-        }
+        },
+        attributes: { exclude: ['password'] }
     })
     return result
 }

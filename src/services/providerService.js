@@ -1,16 +1,25 @@
-const models = require('../models');
+const catchAsync = require('../utils/catchAsyncHandler');
+const providerService = require('../services/providerService');
 
-const getProvider = async (ProviderId) => {
-    const result = await models.Providers.findByPk(ProviderId)
-    return result
-}
+const getProvider = catchAsync(async (req, res) => {
+    const result = await providerService.getProvider(
+        req.params.providerId,
+    );
 
-const CreateProvider = async (payload) => {
-    const result = await models.Providers.create(payload)
-    return result
-}
+    res.send(result);
+});
+
+const createProvider = catchAsync(async (req, res) => {
+    req.body.user = req.user;
+
+    const result = await providerService.CreateProvider(
+        req.body,
+    );
+
+    res.send(result);
+});
 
 module.exports = {
     getProvider,
-    CreateProvider,
-}
+    createProvider,
+};

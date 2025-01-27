@@ -22,8 +22,20 @@ const createPatient = catchAsync(async (req, res) => {
 const updatePatient = catchAsync(async (req, res) => {
     req.body.user = req.user;
 
-    const result = await patientService.createPatient(
+    const result = await patientService.updatePatient(
         req.body,
+        req.params.patientId,
+    );
+
+    res.send(result);
+});
+
+const updatePatientWellness = catchAsync(async (req, res) => {
+    req.body.user = req.user;
+
+    const result = await patientService.updatePatientWellness(
+        req.body,
+        req.params.patientId,
     );
 
     res.send(result);

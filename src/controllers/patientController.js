@@ -1,6 +1,12 @@
 const catchAsync = require('../utils/catchAsyncHandler');
 const patientService = require('../services/patientService');
 
+const getPatients = catchAsync(async (req, res) => {
+    const result = await patientService.getPatients();
+
+    res.send(result);
+});
+
 const getPatient = catchAsync(async (req, res) => {
     const result = await patientService.getPatient(
         req.params.patientId,
@@ -12,7 +18,7 @@ const getPatient = catchAsync(async (req, res) => {
 const createPatient = catchAsync(async (req, res) => {
     req.body.user = req.user;
 
-    const result = await patientService.createPatient(
+    const result = await patientService.CreatePatient(
         req.body,
     );
 
@@ -46,4 +52,5 @@ module.exports = {
     createPatient,
     updatePatient,
     updatePatientWellness,
+    getPatients
 };
